@@ -12,12 +12,13 @@ url9 = 'https://en.wikipedia.org/wiki/2020_Summer_Olympics_medal_table'
 
 urlArr = [url1,url2,url3,url4,url5,url6,url7,url8,url9]
 
-dest = 'data\\olympics'
+dest = 'data/olympics'
 file_name = 'MedalRanks'
 
-
-url = f'https://en.wikipedia.org/wiki/1988_Summer_Olympics_medal_table'
-df = simple_scraper(url, test=0, match_term='Rank')
-write_to_csv(df, destpath=dest,file_name=file_name)
-
-#write_to_xl(df, destpath=dest, file_name=file_name, sheet_name=f'{i}')
+for i in range(1988, 2024, 4):
+    url = f'https://en.wikipedia.org/wiki/{i}_Summer_Olympics_medal_table'
+    df = simple_scraper(url, test=0, match_term='Rank')
+    #write_to_csv(df, destpath=dest,file_name=f'{file_name}_{i}')
+    sheet_name=f'Medals_{i}'
+    print(sheet_name)
+    write_to_xl(df, destpath=dest, file_name=file_name, sheet_name=sheet_name)

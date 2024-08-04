@@ -5,8 +5,7 @@ import os
 
 def makeFolder(folderpath):
     if os.path.exists(folderpath):
-        return
-        #print("Path Exists")
+        return print("Path Exists")
     else:
         os.makedirs(folderpath)
         print("Path does not exist creating....")
@@ -66,11 +65,16 @@ def simple_scraper(url, n=5, test = 0, table_Num = 0, match_term = None):
     return dataFrame
 
 def write_to_csv(dataFrame, destpath, file_name):
-    dataFrame.to_csv(f'/{destpath}/{file_name}.csv', mode = 'a', index=False)
+    dataFrame.to_csv(f'{destpath}/{file_name}.csv', mode = 'a', index=False)
     return print('CSV write complete.')
 
 def write_to_xl(dataFrame, destpath, file_name, sheet_name = '1'):
-    makeFolder(f'/{destpath}/{file_name}.xlsx')
-
-    return dataFrame.to_excel(f'/{destpath}/{file_name}.xlsx', sheet_name=sheet_name, index=False)
-
+    folderpath = f'{destpath}/{file_name}.xlsx'
+    if os.path.exists(folderpath):
+        with pd.ExcelWriter(f'{destpath}/{file_name}.xlsx', engine='openpyxl',mode='a') as writer:
+            dataFrame.to_excel(writer, sheet_name, index=False)
+        return print("Path Exists")
+    else:
+        with open(folderpath, 'w') as file:
+            print("Path does not exist creating....")
+            dataFrame.to_excel(f'{destpath}/{file_name}.xlsx', sheet_name=sheet_name, index=False)
