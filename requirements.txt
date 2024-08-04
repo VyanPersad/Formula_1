@@ -5,3 +5,6 @@ missingno
 seaborn
 scikit-learn
 lxml
+openpyxl
+lxml
+beautifulsoup4
