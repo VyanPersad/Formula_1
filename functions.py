@@ -3,6 +3,12 @@ import numpy as np
 import html5lib
 import os
 
+def testFunc(dataFrame, test=0, n=5):
+    if (test == 0):
+        print('Set test to 1 to view sample datraframes, Default is the first 5 rows, set n to vary the number of rows.')
+    elif (test == 1):
+        print(dataFrame.head(n)) 
+
 def makeFolder(folderpath):
     if os.path.exists(folderpath):
         return print("Path Exists")
@@ -18,18 +24,13 @@ def read_from_file(filepath, test=0, n=5, col_Names = [], sheet = 0):
             dataFrame = pd.read_csv(filepath)
             #dataFrame = pd.read_csv(filepath, sep=';')
             #In the abobve line we tell python to use the ; as the spearator.
-            if (test == 0):
-                print('Set test to 1 to view sample datraframes, Default is the first 5 rows, set n to vary the number of rows.')
-            elif (test == 1):
-                print(dataFrame.head(n))
+            test(dataFrame, test, n)
+
         elif (col_Names != []):
             dataFrame = pd.read_csv(filepath, names=col_Names)
             #dataFrame = pd.read_csv(filepath, sep=';')
             #In the abobve line we tell python to use the ; as the spearator.
-            if (test == 0):
-                print('Set test to 1 to view sample datraframes, Default is the first 5 rows, set n to vary the number of rows.')
-            elif (test == 1):
-                print(dataFrame.head(n))
+            test(dataFrame, test, n)
 
         return dataFrame
 
@@ -47,20 +48,22 @@ def read_from_file(filepath, test=0, n=5, col_Names = [], sheet = 0):
 def simple_scraper(url, n=5, test = 0, table_Num = 0, match_term = None):
     #If the url has multiple tables then set the table_Num to get that table
     #The dafault is set to 0 which will display the first one.
+    #The function has the add parameter of table_num = 'a'
+    #If table_num is set to 'a' then what happens is that the function counts 
+    #the number of tables on the web page and prints all to a csv
+    dataFrame_list = pd.read_html(url)
     if (match_term == None):
-        dataFrame_list = pd.read_html(url)
-        dataFrame = dataFrame_list[table_Num]
-        if (test == 0):
-            print('Set test to 1 to view sample datraframes, Default is the first 5 rows, set n to vary the number of rows.')
-        elif (test == 1):
-            print(dataFrame.head(n))
-    else:
+        if (table_Num == 'a'):
+            print(dataFrame_list)
+            dataFrame = pd.concat(dataFrame_list)
+            testFunc(dataFrame, test, n)
+        elif (table_Num != 'a'):
+            dataFrame = dataFrame_list[table_Num]
+            testFunc(dataFrame, test, n)
+    elif (match_term != None):
         dataFrame_list = pd.read_html(url, match=f'{match_term}')
-        dataFrame = dataFrame_list[table_Num]
-        if (test == 0):
-            print('Set test to 1 to view sample datraframes, Default is the first 5 rows, set n to vary the number of rows.')
-        elif (test == 1):
-            print(dataFrame.head(n))
+        dataFrame = pd.concat(dataFrame_list)
+        testFunc(dataFrame, test, n)
     
     return dataFrame
 
