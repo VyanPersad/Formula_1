@@ -75,7 +75,7 @@ def write_to_xl(dataFrame, destpath, file_name, sheet_name = '1'):
     folderpath = f'{destpath}/{file_name}.xlsx'
     if os.path.exists(folderpath):
         with pd.ExcelWriter(f'{destpath}/{file_name}.xlsx', engine='openpyxl',mode='a') as writer:
-            dataFrame.to_excel(writer, sheet_name, index=False)
+            dataFrame.to_excel(writer, sheet_name=sheet_name, index=False)
         return print("Path Exists")
     else:
         with open(folderpath, 'w') as file:

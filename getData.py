@@ -1,13 +1,16 @@
 from functions import*
 from urls import*
 
-urlArr = [url1,url2,url3,url4,url5,url6,url7,url8,url9]
-katieArr = [free40024, free80024, free150024]
-names = ['f40024','f80024','f150024']
+urlOlympics = 'https://en.wikipedia.org/wiki/1988_Summer_Olympics'
+dest = 'data\Delegation_Size'
+filename = 'Delegation_Size'
+#urlArr = [url10,url11,url12,url13,url14,url15,url16,url17,url18]
 
-dest = 'data\katie_ledecky'
-file_name = 'katie'
+match_term = 'Athletes'
 
-for i in range(3):
-    df = simple_scraper(katieArr[i],table_Num='a')
-    write_to_csv(df, destpath=dest, file_name=f'{file_name}_{names[i]}')
+#print(simple_scraper(url=urlOlympics, table_Num='a', match_term=match_term))
+
+for i in range(1988,2024,4):
+    url = f'https://en.wikipedia.org/wiki/{i}_Summer_Olympics'
+    df = simple_scraper(url, table_Num='a', match_term=match_term)
+    write_to_xl(df, dest, file_name=filename, sheet_name=f'delSize_{i}')
