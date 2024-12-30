@@ -9,8 +9,13 @@ filename = 'Delegation_Size'
 match_term = 'Athletes'
 
 #print(simple_scraper(url=urlOlympics, table_Num='a', match_term=match_term))
-
+'''
 for i in range(1988,2024,4):
     url = f'https://en.wikipedia.org/wiki/{i}_Summer_Olympics'
     df = simple_scraper(url, table_Num='a', match_term=match_term)
     write_to_xl(df, dest, file_name=filename, sheet_name=f'delSize_{i}')
+'''
+url = "https://www.pricesmart.com/en-tt/category/Electronics/E10D24?fq=category%3B%22E10D24015%22"
+
+df = simple_scraper(url, table_Num='a')
+print(df)
