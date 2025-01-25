@@ -68,14 +68,14 @@ def simple_scraper(url, n=5, test = 0, table_Num = 0, match_term = None):
     return dataFrame
 
 def write_to_csv(dataFrame, destpath, file_name):
-    dataFrame.to_csv(f'{destpath}/{file_name}.csv', mode = 'a', index=False)
+    dataFrame.to_csv(f'{destpath}/{file_name}.csv', mode = 'a', index=True)
     return print('CSV write complete.')
 
 def write_to_xl(dataFrame, destpath, file_name, sheet_name = '1'):
     folderpath = f'{destpath}/{file_name}.xlsx'
     if os.path.exists(folderpath):
         with pd.ExcelWriter(f'{destpath}/{file_name}.xlsx', engine='openpyxl',mode='a') as writer:
-            dataFrame.to_excel(writer, sheet_name=sheet_name, index=False)
+            dataFrame.to_excel(writer, sheet_name=sheet_name, index=True)
         return print("Path Exists")
     else:
         with open(folderpath, 'w') as file:
