@@ -1,24 +1,26 @@
 from functions import*
 
-dest = 'data/Formula_1'
+dest = 'data/Formula_1_2025'
 
-'''match_term = 'Albert'''
+traskList = ['Australian_Grand_Prix',
+'Chinese_Grand_Prix',
+'Japanese_Grand_Prix',
+'Bahrain_Grand_Prix',
+'Saudi_Arabian_Grand_Prix',
+'Miami_Grand_Prix',
+'Emilia_Romagna_Grand_Prix',
+'Monaco_Grand_Prix']
+
+match_term = 'Constructor'
 filename = f'Formula_1_Albert'
 
 makeFolder(dest)
 
-'''
-for i in range(2000,2025,1):
-    urlF1 = f'https://en.wikipedia.org/wiki/{i}_Formula_One_World_Championship'
+for i in traskList:
+    urlF1 = f'https://en.wikipedia.org/wiki/2025_{i}'
 
-    df = simple_scraper(urlF1, table_Num='a', match_term = match_term)
-    write_to_xl(df, dest, file_name=filename, sheet_name=f'form_1_{i}')
-    print(i)
-'''
-urlF1 = f'https://www.formula1.com/en/results/2025/races/1254/australia/qualifying'
-
-df = simple_scraper(urlF1, table_Num='a')
-write_to_xl(df, dest, file_name=filename, sheet_name=f'qualifying')
+    df = simple_scraper(urlF1, match_term=match_term)
+    write_to_xl(df, dest, file_name=filename, sheet_name=f'{i}')
 
 '''
 df = simple_scraper(urlF1, table_Num='a')
